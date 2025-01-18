@@ -1,17 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualización de Gráficos</title>
+    <title>Visualización de Gráficos desde Excel</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Visualización de Gráficos desde Excel</h1>
-    <input type="file" id="fileInput" accept=".xlsx, .xls">
-    <div id="chartContainer">
-        <canvas id="myChart"></canvas>
-    </div>
+    <header>
+        <h1>Visualización de Gráficos desde Excel</h1>
+    </header>
+    <main>
+        <section class="upload-section">
+            <label for="fileInput" class="upload-label">Cargar archivo Excel:</label>
+            <input type="file" id="fileInput" accept=".xlsx, .xls">
+        </section>
+        <section id="chartContainer" class="chart-container">
+            <canvas id="myChart"></canvas>
+        </section>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
