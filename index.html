@@ -25,7 +25,7 @@
         }
         
         header {
-            background-color: #ffffff; /* Blanco */
+            background-color: #f7b600; /* Amarillo de Shell */
             width: 100%;
             padding: 20px 0;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -33,15 +33,17 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            position: relative;
+            flex-wrap: wrap;
+            border-bottom: 4px solid #e4002b; /* Borde inferior rojo */
         }
         
         header h1 {
             margin: 0;
-            color: #000000; /* Negro */
+            color: #ffffff; /* Blanco */
             font-weight: 700;
             letter-spacing: 1px;
             flex: 1;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra del texto */
         }
 
         header img {
@@ -116,24 +118,25 @@
         }
         
         footer {
-            background-color: #ffffff; /* Blanco */
+            background-color: #f7b600; /* Amarillo de Shell */
             width: 100%;
             text-align: center;
             padding: 10px 0;
             box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
+            border-top: 4px solid #e4002b; /* Borde superior rojo */
         }
         
         footer p {
             margin: 0;
-            color: #000000; /* Negro */
+            color: #ffffff; /* Blanco */
             font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra del texto */
         }
 
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
-                align-items: center;
             }
 
             header img {
@@ -180,7 +183,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.getElementById('loadButton').addEventListener('click', function() {
-            fetch('https://raw.githubusercontent.com/luccabruno3z/graficos.github.io/main/data.xlsx')
+            fetch('https://raw.githubusercontent.com/luccabruno3z/graficos/main/data.xlsx')
                 .then(response => response.arrayBuffer())
                 .then(data => {
                     const workbook = XLSX.read(data, { type: 'array' });
@@ -193,7 +196,7 @@
 
         document.getElementById('downloadButton').addEventListener('click', function() {
             const link = document.createElement('a');
-            link.href = 'https://raw.githubusercontent.com/luccabruno3z/graficos.github.io/main/data.xlsx';
+            link.href = 'https://raw.githubusercontent.com/luccabruno3z/graficos/main/data.xlsx';
             link.download = 'data.xlsx';
             link.click();
         });
