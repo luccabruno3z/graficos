@@ -49,7 +49,7 @@
         }
         
         main {
-            width: 80%;
+            width: 90%;
             max-width: 1200px;
             margin: 20px auto;
             display: flex;
@@ -82,8 +82,8 @@
             outline: none;
         }
         
-        #loadButton {
-            margin-top: 20px;
+        #loadButton, #downloadButton, #refreshButton {
+            margin: 10px;
             padding: 12px 24px;
             border: none;
             background-color: #e4002b; /* Rojo de Shell */
@@ -95,10 +95,10 @@
             transition: background-color 0.3s ease;
         }
         
-        #loadButton:hover {
+        #loadButton:hover, #downloadButton:hover, #refreshButton:hover {
             background-color: #c30024; /* Rojo más oscuro para hover */
         }
-        
+
         .chart-container {
             width: 100%;
             max-width: 800px;
@@ -128,6 +128,22 @@
             color: #000000; /* Negro */
             font-weight: 500;
         }
+
+        @media (max-width: 768px) {
+            main {
+                width: 95%;
+                padding: 20px;
+            }
+
+            header img {
+                height: 40px;
+            }
+
+            #loadButton, #downloadButton, #refreshButton {
+                width: 100%;
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -139,6 +155,8 @@
         <section class="upload-section">
             <label class="upload-label">Cargar datos desde el archivo Excel en el repositorio:</label>
             <button id="loadButton">Cargar Datos</button>
+            <button id="downloadButton">Descargar Datos</button>
+            <button id="refreshButton">Actualizar</button>
         </section>
         <section id="chartContainer" class="chart-container">
             <canvas id="myChart"></canvas>
@@ -160,6 +178,17 @@
                     const json = XLSX.utils.sheet_to_json(worksheet);
                     displayChart(json);
                 });
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.href = 'https://raw.githubusercontent.com/luccabruno3z/graficos.github.io/main/data.xlsx';
+            link.download = 'data.xlsx';
+            link.click();
+        });
+
+        document.getElementById('refreshButton').addEventListener('click', function() {
+            location.reload();
         });
 
         function displayChart(data) {
