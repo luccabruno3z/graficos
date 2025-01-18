@@ -23,10 +23,10 @@ function displayChart(data) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Values',
+                label: 'Valores',
                 data: values,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(228, 0, 43, 0.2)', /* Rojo de Shell */
+                borderColor: 'rgba(228, 0, 43, 1)', /* Rojo de Shell */
                 borderWidth: 1
             }]
         },
