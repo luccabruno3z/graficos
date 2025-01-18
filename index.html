@@ -56,29 +56,6 @@
             color: #e4002b; /* Rojo de Shell */
         }
         
-        #fileInput {
-            margin-top: 10px;
-            padding: 10px;
-            border: 2px solid #e4002b;
-            border-radius: 5px;
-            font-size: 1em;
-        }
-        
-        #uploadButton {
-            margin-top: 10px;
-            padding: 10px 20px;
-            border: none;
-            background-color: #e4002b; /* Rojo de Shell */
-            color: #ffffff;
-            font-size: 1em;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        #uploadButton:hover {
-            background-color: #c30024; /* Rojo más oscuro para hover */
-        }
-        
         .chart-container {
             width: 100%;
             max-width: 800px;
@@ -115,9 +92,8 @@
     </header>
     <main>
         <section class="upload-section">
-            <label for="fileInput" class="upload-label">Cargar archivo Excel:</label>
-            <input type="file" id="fileInput" accept=".xlsx, .xls">
-            <button id="uploadButton">Subir</button>
+            <label class="upload-label">Cargar datos desde el archivo Excel en el repositorio:</label>
+            <button id="loadButton">Cargar Datos</button>
         </section>
         <section id="chartContainer" class="chart-container">
             <canvas id="myChart"></canvas>
@@ -129,20 +105,16 @@
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.getElementById('fileInput').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const data = new Uint8Array(e.target.result);
+        document.getElementById('loadButton').addEventListener('click', function() {
+            fetch('https://raw.githubusercontent.com/luccabruno3z/graficos.github.io/main/data.xlsx')
+                .then(response => response.arrayBuffer())
+                .then(data => {
                     const workbook = XLSX.read(data, { type: 'array' });
                     const firstSheetName = workbook.SheetNames[0];
                     const worksheet = workbook.Sheets[firstSheetName];
                     const json = XLSX.utils.sheet_to_json(worksheet);
                     displayChart(json);
-                };
-                reader.readAsArrayBuffer(file);
-            }
+                });
         });
 
         function displayChart(data) {
