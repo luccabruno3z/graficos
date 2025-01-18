@@ -4,7 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualización de Gráficos desde Excel</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: url('background-pattern.png'); /* Fondo decorativo */
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        header {
+            background-color: #f7b600; /* Amarillo de Shell */
+            width: 100%;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            margin: 0;
+            color: #ffffff;
+        }
+        
+        main {
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upload-section {
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .upload-label {
+            font-size: 1.2em;
+            color: #e4002b; /* Rojo de Shell */
+        }
+        
+        #fileInput {
+            margin-top: 10px;
+            padding: 10px;
+            border: 2px solid #e4002b;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        #uploadButton {
+            margin-top: 10px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #e4002b; /* Rojo de Shell */
+            color: #ffffff;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #uploadButton:hover {
+            background-color: #c30024; /* Rojo más oscuro para hover */
+        }
+        
+        .chart-container {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        canvas {
+            width: 100%;
+            height: auto;
+        }
+        
+        footer {
+            background-color: #f7b600; /* Amarillo de Shell */
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        
+        footer p {
+            margin: 0;
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -25,6 +128,48 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const json = XLSX.utils.sheet_to_json(worksheet);
+                    displayChart(json);
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        });
+
+        function displayChart(data) {
+            const labels = data.map(row => row['Label']);
+            const values = data.map(row => row['Value']);
+            const ctx = document.getElementById('myChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Valores',
+                        data: values,
+                        backgroundColor: 'rgba(228, 0, 43, 0.2)', /* Rojo de Shell */
+                        borderColor: 'rgba(228, 0, 43, 1)', /* Rojo de Shell */
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 </body>
 </html>
